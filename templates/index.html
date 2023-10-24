@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<header class="masthead" style="background: #3398E1; height: auto; padding-bottom: 15px; box-shadow: 0 16px 48px #E3E7EB; padding-top: 10px;">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-12 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h3 class=" site-heading my-3 mt-3 text-white"> Bienvenue sur le Blog! </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <!-- Blog Entries Column -->
+        <div class="col-md-12 mt-3 left">
+            {% for post in post_list %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">{{ post.title }}</h2>
+                    <!-- <p class="card-text text-muted h6">{{ post.author }} | {{ post.created_on}} </p> -->
+                    <p class="card-text text-muted h6">{{ post.created_on}} </p>
+    <p class="card-text" style="font-size: 18px;">{{post.content|slice:":200" }}</p>
+                    <a href="{% url 'post_detail' post.slug  %}" class="btn btn-primary">Voir plus &rarr;</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% if is_paginated %}
+        <nav aria-label="Page navigation conatiner"></nav>
+        <ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREC </a></li>
+    {% endif %}
+    {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> SUIV &raquo;</a></li>
+    {% endif %}
+  </ul>
+  </nav></div>
+{% endif %}
+</div>
+
+{%endblock%}
